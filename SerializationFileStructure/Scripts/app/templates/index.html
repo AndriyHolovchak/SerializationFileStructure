@@ -1,33 +1,57 @@
-﻿<!--<form ng-submit="serialize(data)">
-    <div class="form-group">
-        <label for="serializePath">serializePath:</label>
-        <input type="text" class="form-control" id="serializePath" ng-model="data.serializePath" required>
-    </div>
-    <div class="form-group">
-        <label for="filePath">filePath:</label>
-        <input type="text" class="form-control" id="filePath" ng-model="data.filePath" required>
-    </div>
-    <button class="btn btn-default">Send</button>
-</form>
--->
-
-
-<form ng-submit="deserialize(file, data)">
-    <div class="form-inline">
-        <div class="col-lg-3" type="file" ngf-select ngf-drop-disabled="disable" ng-model="file"
-             name="file" ngf-max-size="5MB" accept=".dat" ngf-pattern="'.dat'"
-             ngf-model-invalid="errorFile" ng-required>
-            <div class="profilePhotoWrap">
-                <div ng-show="!file" class="placeImg">
-                    <p class="text-center placeholder">Click here to upload file</p>
+﻿<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <form ng-submit="serialize(serData)">
+                <div class="form-group">
+                    <label for="serializePath">serializePath:</label>
+                    <input type="text" class="form-control" id="serializePath" ng-model="serData.serializePath" required>
                 </div>
-                <span ng-show="file">{{file.name}}</span>
-            </div>
+                <div class="form-group">
+                    <label for="filePath">filePath:</label>
+                    <input type="text" class="form-control" id="filePath" ng-model="serData.filePath" required>
+                </div>
+                <button class="btn btn-default">Send</button>
+                <button type="button" class="btn btn-default" ng-click="resetSerialize()">Reset</button>
+                <img class="loading" ng-show="isSerializing" src="/Content/images/gears.gif" />
+            </form>
         </div>
-        <div class="form-group">
-            <label for="deserializePath">deserializePath:</label>
-            <input type="text" class="form-control" id="deserializePath" ng-model="data.deserializePath" required>
+        <div class="col-lg-6 col-md-6">
+            <form ng-submit="deserialize(file, deserData)" name="UploadFile">
+                <div>
+                    <div class="form-group select-file" type="file" ngf-select ngf-drop-disabled="disable" ng-model="file"
+                         name="file" ngf-max-size="1000000MB" accept=".dat" ngf-pattern="'.dat'"
+                         ngf-model-invalid="errorFile" ng-required>
+                        <div>
+                            <div ng-show="!file">
+                                <p class="text-center">Click here to select file</p>
+                            </div>
+                            <span ng-show="file">{{file.name}}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="deserializePath">deserializePath:</label>
+                        <input type="text" class="form-control" id="deserializePath" ng-model="deserData.deserializePath" required>
+                    </div>
+                    <button class="btn btn-default">Send</button>
+                    <button type="button" class="btn btn-default" ng-click="resetDeserialize()">Reset</button>
+                    <img class="loading" ng-show="isDeserializing" src="/Content/images/gears.gif" />
+                </div>
+
+                
+                <h5 ng-show="error" class="file_error">
+                    {{error}}
+                </h5>
+                <h5 ng-show="updateError" class="file_error">
+                    {{updateError}}
+                </h5>
+                <h5 class="file_error" ng-show="UploadFile.file.$error.pattern">
+                    You can upload only .dat files!
+                </h5>
+                <h5 class="file_error" ng-show="UploadFile.file.$error.maxSize">
+                    {{errorFile.name}} is too large ({{errorFile.size / 1000000|number:1}}mb): <br> max size is 5mb.
+                </h5>
+            </form>
         </div>
-        <button class="btn btn-default">Send</button>
     </div>
-</form>
+</div>

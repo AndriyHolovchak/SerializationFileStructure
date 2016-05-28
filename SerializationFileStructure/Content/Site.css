@@ -15,3 +15,21 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.select-file {
+    border: 1px dashed #000;
+    border-radius: 5px;
+    width: 280px;
+    padding: 10px;
+    min-height: 60px;
+    color: #777;
+}
+
+.file_error {
+    color: #ff0000;
+}
+
+img.loading {
+    height: 30px;
+    margin: 0px 20px;
+}

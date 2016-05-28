@@ -5,42 +5,40 @@
     ]);
 
 function HomeController($scope, API, Upload) {
+    $scope.serData = {};
+    $scope.deserData = {};
+    $scope.isDeserializing = false;
+    $scope.isSerializing = false;
 
     function serializeToFile(data) {
         return API.serialiseToFile(data).then(function (res) {
-            console.log(res);
+            $scope.serData = {};
+            $scope.isSerializing = false;
         });
     }
 
-    function deserialiseToFile(data) {
-        return API.deserialiseToFile(data).then(function (res) {
-            console.log(res);
-        });
+    $scope.serialize = function (serData) {
+        $scope.isSerializing = true;
+        serializeToFile(serData);
     }
 
-    $scope.serialize = function (data) {
-        console.log(data);
-
-        serializeToFile(data);
+    $scope.resetSerialize = function() {
+        $scope.serData = {};
     }
 
-    //$scope.uploadme
-
-   /* $scope.deserialize = function (data) {
-        console.log(data);
-        console.log($scope.uploadme);
-
-        var body = {
-            "DeserializePath": data.deserializePath,
-            "File": $scope.uploadme
-        }
-
-        deserialiseToFile(body);
-    }*/
+    $scope.resetDeserialize = function () {
+        $scope.deserData = {};
+        $scope.file = null;
+        $scope.error = null;
+        $scope.updateError = null;
+    }
 
     $scope.deserialize = function (file, data) {
-
-
+        if (!file) {
+            $scope.error = "File is required!";
+            return;
+        }
+        $scope.isDeserializing = true;
         var sendObj = {        
                 file: file,
                 path: data.deserializePath
@@ -49,6 +47,12 @@ function HomeController($scope, API, Upload) {
             method: 'POST',
             url: "/api/deserialize/",
             data: sendObj
+        }).then(function(res) {
+            $scope.deserData = {};
+            $scope.file = null;
+            $scope.isDeserializing = false;
+        }, function (error) {
+            $scope.updateError = "Something happened with your updating!";
         });
 
     }

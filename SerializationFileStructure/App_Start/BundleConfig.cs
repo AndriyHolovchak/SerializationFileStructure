@@ -27,6 +27,8 @@ namespace SerializationFileStructure
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-route.js",
+                "~/Scripts/ng-file-upload.min.js",
+                "~/Scripts/ng-file-upload-shim.min.js",
                 "~/Scripts/app/app.js",
                 "~/Scripts/app/controllers/HomeController.js",
                 "~/Scripts/app/services/APIS.js"

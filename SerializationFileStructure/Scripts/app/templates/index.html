@@ -1,4 +1,4 @@
-﻿<form ng-submit="serialize(data)">
+﻿<!--<form ng-submit="serialize(data)">
     <div class="form-group">
         <label for="serializePath">serializePath:</label>
         <input type="text" class="form-control" id="serializePath" ng-model="data.serializePath" required>
@@ -8,4 +8,26 @@
         <input type="text" class="form-control" id="filePath" ng-model="data.filePath" required>
     </div>
     <button class="btn btn-default">Send</button>
+</form>
+-->
+
+
+<form ng-submit="deserialize(file, data)">
+    <div class="form-inline">
+        <div class="col-lg-3" type="file" ngf-select ngf-drop-disabled="disable" ng-model="file"
+             name="file" ngf-max-size="5MB" accept=".dat" ngf-pattern="'.dat'"
+             ngf-model-invalid="errorFile" ng-required>
+            <div class="profilePhotoWrap">
+                <div ng-show="!file" class="placeImg">
+                    <p class="text-center placeholder">Click here to upload file</p>
+                </div>
+                <span ng-show="file">{{file.name}}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="deserializePath">deserializePath:</label>
+            <input type="text" class="form-control" id="deserializePath" ng-model="data.deserializePath" required>
+        </div>
+        <button class="btn btn-default">Send</button>
+    </div>
 </form>

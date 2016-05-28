@@ -1,4 +1,4 @@
-﻿angular.module("SerializationFileStructure", ["ngRoute"])
+﻿angular.module("SerializationFileStructure", ["ngRoute", "ngFileUpload"])
     .config(["$routeProvider", function ($routeProvider) {
         $routeProvider.when("/",
         {

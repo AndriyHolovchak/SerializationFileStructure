@@ -6,7 +6,12 @@ function api($http) {
         return $http.post("/api/serialize/", body);
     }
 
+    function deserialiseToFile(body) {
+        return $http.post("/api/deserialize/", body);
+    }
+
     return {
-        serialiseToFile
+        serialiseToFile,
+        deserialiseToFile
     }
 }

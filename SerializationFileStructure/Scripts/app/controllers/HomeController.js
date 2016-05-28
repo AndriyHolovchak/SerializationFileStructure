@@ -1,9 +1,20 @@
 ﻿angular.module("SerializationFileStructure")
     .controller("HomeController",
     [
-        "$scope", HomeController
+        "$scope", "API", HomeController
     ]);
 
-function HomeController($scope) {
-    $scope.test = "TEST TEST";
+function HomeController($scope, API) {
+
+    function serializeToFile(data) {
+        return API.serialiseToFile(data).then(function (res) {
+            console.log(res);
+        });
+    }
+
+    $scope.serialize = function (data) {
+        console.log(data);
+
+        serializeToFile(data);
+    }
 }

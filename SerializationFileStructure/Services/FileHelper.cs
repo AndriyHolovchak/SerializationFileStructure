@@ -15,7 +15,7 @@ namespace SerializationFileStructure.Services
 
     public class FileHelper
     {
-        public Filelist GetFilesRecursive(string path)
+        public static Filelist GetFilesRecursive(string path)
         {
             // Store results in the file results list.
             Filelist result = new Filelist();

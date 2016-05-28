@@ -28,7 +28,8 @@ namespace SerializationFileStructure
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-route.js",
                 "~/Scripts/app/app.js",
-                "~/Scripts/app/controllers/HomeController.js"
+                "~/Scripts/app/controllers/HomeController.js",
+                "~/Scripts/app/services/APIS.js"
                 ));
         }
     }

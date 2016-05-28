@@ -1,1 +1,11 @@
-﻿
+﻿<form ng-submit="serialize(data)">
+    <div class="form-group">
+        <label for="serializePath">serializePath:</label>
+        <input type="text" class="form-control" id="serializePath" ng-model="data.serializePath" required>
+    </div>
+    <div class="form-group">
+        <label for="filePath">filePath:</label>
+        <input type="text" class="form-control" id="filePath" ng-model="data.filePath" required>
+    </div>
+    <button class="btn btn-default">Send</button>
+</form>

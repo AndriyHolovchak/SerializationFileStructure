@@ -1,6 +1,8 @@
 ﻿<div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6">
+            <h2>Form for serializing</h2>
+            <br />
             <form ng-submit="serialize(serData)">
                 <div class="form-group">
                     <label for="serializePath">Folder path that should be stored into one file:</label>
@@ -23,6 +25,8 @@
             </h5>
         </div>
         <div class="col-lg-6 col-md-6">
+            <h2>Form for deserializing</h2>
+            <br/>
             <form ng-submit="deserialize(file, deserData)" name="UploadFile">
                 <div>
                     <div class="form-group select-file" type="file" ngf-select ngf-drop-disabled="disable" ng-model="file"
@@ -48,7 +52,7 @@
                 <div ng-show="success" class="alert alert-success">
                     {{success}}
                 </div>
-                
+
                 <h5 ng-show="error" class="file_error">
                     {{error}}
                 </h5>

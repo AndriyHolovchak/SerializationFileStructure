@@ -19,8 +19,13 @@ function HomeController($scope, API, Upload) {
         }, function (err) {
             $scope.serData = {};
             $scope.isSerializing = false;
-            $scope.serializeError = err.data;
             $scope.disabled = false;
+
+            if (err.status == 400) {
+                $scope.serializeError = err.data;
+            } else {
+                $scope.serializeError = err.statusText + ". " + err.data.ExceptionMessage;
+            }
         });
     }
 
@@ -60,7 +65,6 @@ function HomeController($scope, API, Upload) {
             url: "/api/deserialize/",
             data: sendObj
         }).then(function (res) {
-            console.log(res);
             $scope.deserData = {};
             $scope.file = null;
             $scope.isDeserializing = false;
@@ -71,7 +75,7 @@ function HomeController($scope, API, Upload) {
             if (err.status == 400) {
                 $scope.updateError = err.data;
             } else {
-                $scope.updateError = err.statusText +". "+ err.data.Message;
+                $scope.updateError = err.statusText + ". " + err.data.ExceptionMessage;
             }
             $scope.disabled = false;
             $scope.isDeserializing = false;

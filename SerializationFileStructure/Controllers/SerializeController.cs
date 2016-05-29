@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -22,24 +23,30 @@ namespace SerializationFileStructure.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorect path to the folder in which the file will be saved.");
             }
 
-            var dirs = FileHelper.GetFilesRecursive(@SerializeData.serializePath);
-
-            var data = dirs;
-
-            var folderPath = SerializeData.serializePath;
-
-            var pos = folderPath.LastIndexOf("\\") + 1;
-
-            var fileName = folderPath.Substring(pos, folderPath.Length - pos);
-
-            using (var stream = File.Create(@SerializeData.filePath + "\\" + fileName + ".dat"))
+            try
             {
-                var formatter = new BinaryFormatter();
+                var dirs = FileHelper.GetFilesRecursive(@SerializeData.serializePath);
 
-                formatter.Serialize(stream, data);
+                var data = dirs;
+
+                var folderPath = SerializeData.serializePath;
+
+                var pos = folderPath.LastIndexOf("\\") + 1;
+
+                var fileName = folderPath.Substring(pos, folderPath.Length - pos);
+
+                using (var stream = File.Create(@SerializeData.filePath + "\\" + fileName + ".dat"))
+                {
+                    var formatter = new BinaryFormatter();
+
+                    formatter.Serialize(stream, data);
+                }
+                return Request.CreateResponse(HttpStatusCode.Created, "File saved! Path to file: " + SerializeData.filePath + "\\" + fileName + ".dat");
             }
-
-            return Request.CreateResponse(HttpStatusCode.Created, "File saved! Path to file: "+ SerializeData.filePath + "\\" + fileName + ".dat");
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }         
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using SerializationFileStructure.Models;
 
 namespace SerializationFileStructure.Services
@@ -10,7 +8,6 @@ namespace SerializationFileStructure.Services
     [Serializable]
     public class Filelist : List<FileModel>
     {
-
     }
 
     public class FileHelper
@@ -18,10 +15,10 @@ namespace SerializationFileStructure.Services
         public static Filelist GetFilesRecursive(string path)
         {
             // Store results in the file results list.
-            Filelist result = new Filelist();
+            var result = new Filelist();
 
             // Store a stack of our directories.
-            Stack<string> stack = new Stack<string>();
+            var stack = new Stack<string>();
 
             // Add initial directory.
             stack.Push(path);
@@ -30,33 +27,23 @@ namespace SerializationFileStructure.Services
             while (stack.Count > 0)
             {
                 // Get top directory
-                string dir = stack.Pop();
+                var dir = stack.Pop();
 
-               // try
-                //{
-                    // Add all files at this directory to the result List.
-                    foreach (var i in Directory.GetFiles(dir, "*.*"))
-                    {
-                        using (FileStream fstream = File.OpenRead(i))
-                        {
-                            byte[] array = new byte[fstream.Length];
-                            fstream.Read(array, 0, array.Length);
-                            //string textFromFile = System.Text.Encoding.Default.GetString(array);
-
-                            result.Add(new FileModel() { Path = i.Substring(path.Length), Data = array });
-                        }
-                    }
-
-                    // Add all directories at this directory.
-                    foreach (string dn in Directory.GetDirectories(dir))
-                    {
-                        stack.Push(dn);
-                    }
-                //}
-                /*catch
+                foreach (var i in Directory.GetFiles(dir, "*.*"))
                 {
-                    // Could not open the directory
-                }*/
+                    using (var fstream = File.OpenRead(i))
+                    {
+                        var array = new byte[fstream.Length];
+                        fstream.Read(array, 0, array.Length);
+                        result.Add(new FileModel {Path = i.Substring(path.Length), Data = array});
+                    }
+                }
+
+                // Add all directories at this directory.
+                foreach (var dn in Directory.GetDirectories(dir))
+                {
+                    stack.Push(dn);
+                }
             }
             return result;
         }

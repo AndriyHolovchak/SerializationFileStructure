@@ -3,17 +3,24 @@
         <div class="col-lg-6 col-md-6">
             <form ng-submit="serialize(serData)">
                 <div class="form-group">
-                    <label for="serializePath">serializePath:</label>
-                    <input type="text" class="form-control" id="serializePath" ng-model="serData.serializePath" required>
+                    <label for="serializePath">Folder path that should be stored into one file:</label>
+                    <input type="text" class="form-control" id="serializePath" ng-model="serData.serializePath" required placeholder="Paste the path to the folder here...">
                 </div>
                 <div class="form-group">
-                    <label for="filePath">filePath:</label>
-                    <input type="text" class="form-control" id="filePath" ng-model="serData.filePath" required>
+                    <label for="filePath">Path to the folder in which the file will be saved:</label>
+                    <input type="text" class="form-control" id="filePath" ng-model="serData.filePath" required placeholder="Paste the path to the folder here...">
                 </div>
-                <button class="btn btn-default">Send</button>
-                <button type="button" class="btn btn-default" ng-click="resetSerialize()">Reset</button>
-                <img class="loading" ng-show="isSerializing" src="/Content/images/gears.gif" />
+                <button class="btn btn-default" ng-disabled="disabled">To serialize</button>
+                <button type="button" class="btn btn-default" ng-click="resetSerialize()" ng-disabled="disabled">Reset</button>
+                <img class="loading" ng-show="isSerializing" src="/Content/images/gears.gif"/>
             </form>
+            <br/>
+            <div ng-show="serializeSuccess" class="alert alert-success">
+                {{serializeSuccess}}
+            </div>
+            <h5 ng-show="serializeError" class="file_error">
+                {{serializeError}}
+            </h5>
         </div>
         <div class="col-lg-6 col-md-6">
             <form ng-submit="deserialize(file, deserData)" name="UploadFile">
@@ -30,14 +37,17 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="deserializePath">deserializePath:</label>
-                        <input type="text" class="form-control" id="deserializePath" ng-model="deserData.deserializePath" required>
+                        <label for="deserializePath">Folder path to deserialize:</label>
+                        <input type="text" class="form-control" id="deserializePath" ng-model="deserData.deserializePath" required placeholder="Paste the path to the folder here...">
                     </div>
-                    <button class="btn btn-default">Send</button>
-                    <button type="button" class="btn btn-default" ng-click="resetDeserialize()">Reset</button>
-                    <img class="loading" ng-show="isDeserializing" src="/Content/images/gears.gif" />
+                    <button class="btn btn-default" ng-disabled="disabled">To deserialize</button>
+                    <button type="button" class="btn btn-default" ng-click="resetDeserialize()" ng-disabled="disabled">Reset</button>
+                    <img class="loading" ng-show="isDeserializing" src="/Content/images/gears.gif"/>
                 </div>
-
+                <br/>
+                <div ng-show="success" class="alert alert-success">
+                    {{success}}
+                </div>
                 
                 <h5 ng-show="error" class="file_error">
                     {{error}}

@@ -32,8 +32,8 @@ namespace SerializationFileStructure.Services
                 // Get top directory
                 string dir = stack.Pop();
 
-                try
-                {
+               // try
+                //{
                     // Add all files at this directory to the result List.
                     foreach (var i in Directory.GetFiles(dir, "*.*"))
                     {
@@ -41,7 +41,7 @@ namespace SerializationFileStructure.Services
                         {
                             byte[] array = new byte[fstream.Length];
                             fstream.Read(array, 0, array.Length);
-                            string textFromFile = System.Text.Encoding.Default.GetString(array);
+                            //string textFromFile = System.Text.Encoding.Default.GetString(array);
 
                             result.Add(new FileModel() { Path = i.Substring(path.Length), Data = array });
                         }
@@ -52,11 +52,11 @@ namespace SerializationFileStructure.Services
                     {
                         stack.Push(dn);
                     }
-                }
-                catch
+                //}
+                /*catch
                 {
                     // Could not open the directory
-                }
+                }*/
             }
             return result;
         }

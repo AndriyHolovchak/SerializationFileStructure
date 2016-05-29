@@ -15,11 +15,11 @@ namespace SerializationFileStructure.Controllers
         {
             if (!Directory.Exists(SerializeData.serializePath))
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorect serialize path");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorect folder path that should be stored into one file.");
             }
             if (!Directory.Exists(SerializeData.filePath))
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorect file path");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorect path to the folder in which the file will be saved.");
             }
 
             var dirs = FileHelper.GetFilesRecursive(@SerializeData.serializePath);
@@ -39,7 +39,7 @@ namespace SerializationFileStructure.Controllers
                 formatter.Serialize(stream, data);
             }
 
-            return Request.CreateResponse(HttpStatusCode.Created);
+            return Request.CreateResponse(HttpStatusCode.Created, "File saved! Path to file: "+ SerializeData.filePath + "\\" + fileName + ".dat");
         }
     }
 }

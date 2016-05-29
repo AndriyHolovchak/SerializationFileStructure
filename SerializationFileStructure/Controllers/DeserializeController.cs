@@ -30,7 +30,7 @@ namespace SerializationFileStructure.Controllers
 
                 if (!Directory.Exists(path))
                 {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorect deserialize path");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorect deserialize path.");
                 }
 
                 var file = provider.FileData[0];
@@ -51,7 +51,7 @@ namespace SerializationFileStructure.Controllers
                     }
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, "Success! File unpacked into the folder: " + path);
             }
             catch (Exception e)
             {

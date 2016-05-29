@@ -14,16 +14,26 @@ function HomeController($scope, API, Upload) {
         return API.serialiseToFile(data).then(function (res) {
             $scope.serData = {};
             $scope.isSerializing = false;
+            $scope.serializeSuccess = res.data;
+            $scope.disabled = false;
+        }, function (err) {
+            $scope.serData = {};
+            $scope.isSerializing = false;
+            $scope.serializeError = err.data;
+            $scope.disabled = false;
         });
     }
 
     $scope.serialize = function (serData) {
+        $scope.disabled = true;
         $scope.isSerializing = true;
         serializeToFile(serData);
     }
 
     $scope.resetSerialize = function() {
         $scope.serData = {};
+        $scope.serializeSuccess = null;
+        $scope.serializeError = null;
     }
 
     $scope.resetDeserialize = function () {
@@ -31,6 +41,7 @@ function HomeController($scope, API, Upload) {
         $scope.file = null;
         $scope.error = null;
         $scope.updateError = null;
+        $scope.success = null;
     }
 
     $scope.deserialize = function (file, data) {
@@ -38,6 +49,7 @@ function HomeController($scope, API, Upload) {
             $scope.error = "File is required!";
             return;
         }
+        $scope.disabled = true;
         $scope.isDeserializing = true;
         var sendObj = {        
                 file: file,
@@ -47,12 +59,22 @@ function HomeController($scope, API, Upload) {
             method: 'POST',
             url: "/api/deserialize/",
             data: sendObj
-        }).then(function(res) {
+        }).then(function (res) {
+            console.log(res);
             $scope.deserData = {};
             $scope.file = null;
             $scope.isDeserializing = false;
-        }, function (error) {
-            $scope.updateError = "Something happened with your updating!";
+            $scope.success = res.data;
+            $scope.updateError = null;
+            $scope.disabled = false;
+        }, function (err) {
+            if (err.status == 400) {
+                $scope.updateError = err.data;
+            } else {
+                $scope.updateError = err.statusText +". "+ err.data.Message;
+            }
+            $scope.disabled = false;
+            $scope.isDeserializing = false;
         });
 
     }
